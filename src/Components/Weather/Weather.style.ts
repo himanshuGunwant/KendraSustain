@@ -1,0 +1,16 @@
+import styled from '@emotion/styled';
+
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  height: 100%;
+  border-radius: 5px;
+  justify-content: space-between;
+  padding: 10px 20px;
+  max-width: 320px;
+  grid-column: 1 / 3;
+  img {
+    width: 35px;
+  }
+`;
