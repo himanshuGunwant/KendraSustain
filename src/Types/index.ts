@@ -66,3 +66,15 @@ export interface contextType {
   setClose?: React.Dispatch<React.SetStateAction<boolean>>;
   setHead?: (item: React.ReactNode) => void;
 }
+
+export interface OrgFormFields {
+  org_name: string;
+  industry: string;
+  address: string;
+  country: string;
+  state: string;
+  zip_code: string;
+  city: string;
+  lei_id: string;
+  org_email: string;
+}

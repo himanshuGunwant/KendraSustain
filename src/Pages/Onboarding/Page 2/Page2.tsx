@@ -5,6 +5,7 @@ import React, { useContext, useState } from 'react';
 import { MenuDiv } from '../Page 1/Page1.style';
 import { Container } from './Page2.style';
 import { ONBOARDCONTEXT } from '../Onboarding';
+import { OrgFormFields } from 'Types';
 const country_data = [
   {
     name: undefined,
@@ -34,22 +35,10 @@ const selectStyle = {
   borderRadius: 5
 };
 
-interface FormFields {
-  org_name: string;
-  industry: string;
-  address: string;
-  country: string;
-  state: string;
-  zip_code: string;
-  city: string;
-  lei_id: string;
-  org_email: string;
-}
-
 const admin =
   'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJxM1ZqdDdRMXN2dmtPY3BrN2JYZm9NcEFWbUt6VW5ORWJJLUVVME45M2ZnIn0.eyJleHAiOjE2NTk3MDA5NTIsImlhdCI6MTY1OTYxNDU1MiwianRpIjoiNTlmYjkwNjItZTU0Ni00OWNlLWEyZjQtMWFkYmNmMDYxMzBmIiwiaXNzIjoiaHR0cDovLzMuMTIxLjIzMy4zMjo4MDgwL3JlYWxtcy9tYXN0ZXIiLCJzdWIiOiIzNzZhZTc4Ny0zNDQwLTRhM2QtYjI5MS1hMTI5MjFjMzI4MTYiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJzZXNzaW9uX3N0YXRlIjoiY2JjMDBjZmMtZjM0ZS00NmFhLTljNDgtZThmYjQxYTE1M2ViIiwiYWNyIjoiMSIsInNjb3BlIjoicHJvZmlsZSBlbWFpbCIsInNpZCI6ImNiYzAwY2ZjLWYzNGUtNDZhYS05YzQ4LWU4ZmI0MWExNTNlYiIsImVtYWlsX3ZlcmlmaWVkIjpmYWxzZSwicHJlZmVycmVkX3VzZXJuYW1lIjoiYWRtaW4ifQ.O6g9BFmbPD0a4zGePpJqXXaaeb_gw2jD6PVnY7Gy1TUftl01kU6xF2Y_3JxaH7cFOrAo4ZubkRtsf8JApzNW6MO4Mdpiv2UlKg3QP5TqxaoW_sAwEojxF0vzqkDWVbZ4ckD-uO6RfmLij3TYFzQVh4_4dAaRmOMcbqFGBNFqbSZg009uSRGd47il_9hYS1Xn9rVqPOarPPd_AfCedPsKHOcjoPDRreyqNwqt_LKS6E3QgjWc_i6RZvgAL-Y8j7bSblvs9zG9hCXXrqC24T8omDmLToq0b2Bjk3deLKixoRVjdPu6c3WzKHyIKVvlEW25Yc5y4gTve2EhfrumWbbHjg';
 
-const intialValue: FormFields = {
+const intialValue: OrgFormFields = {
   org_name: '',
   industry: '',
   address: '',
@@ -61,8 +50,8 @@ const intialValue: FormFields = {
   org_email: ''
 };
 const Page2 = () => {
-  const { makeRequest } = useContext(ONBOARDCONTEXT);
-  const [orgnaizationDetails, setOrgnaizationDetails] = useState<FormFields>(intialValue);
+  const { makeRequest, createRealm } = useContext(ONBOARDCONTEXT);
+  const [orgnaizationDetails, setOrgnaizationDetails] = useState<OrgFormFields>(intialValue);
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setOrgnaizationDetails((details) => ({
@@ -79,6 +68,7 @@ const Page2 = () => {
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    createRealm?.(orgnaizationDetails);
   };
 
   return (
@@ -190,7 +180,6 @@ const Page2 = () => {
           value={orgnaizationDetails.org_email}
           onChange={handleChange}
         />
-        <Button type={'submit'}>Submit</Button>
       </form>
     </Container>
   );

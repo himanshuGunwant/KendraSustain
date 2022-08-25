@@ -9,9 +9,11 @@ import Page3 from './Page 3/Page3';
 import Page4 from './Page 4/Page4';
 import Page5 from './Page 5/Page5';
 import Steps from './Steps/Steps';
+import { OrgFormFields } from 'Types';
 
 interface ICONTEXT {
   makeRequest?: AxiosInstance;
+  createRealm?: (orgData: OrgFormFields) => void;
 }
 export const ONBOARDCONTEXT = createContext<ICONTEXT>({});
 
@@ -45,14 +47,15 @@ const Onboarding = () => {
     setPage(clickItem);
   };
 
-  const createRealm = () => {
+  const createRealm = (orgData: OrgFormFields) => {
     makeRequest({
       url: '/admin/realms',
       headers: {
         'Content-Type': 'application/json'
       },
+      method: 'POST',
       data: {
-        realm: 'Api 2'
+        realm: orgData.org_name
       }
     }).then((res) => {
       console.log(res.data);
@@ -78,7 +81,7 @@ const Onboarding = () => {
   }, []);
 
   return (
-    <ONBOARDCONTEXT.Provider value={{ makeRequest }}>
+    <ONBOARDCONTEXT.Provider value={{ makeRequest, createRealm }}>
       <Container page={page}>
         <Navbar style={{ paddingTop: '1rem' }} />
         <main>
